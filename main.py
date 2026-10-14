@@ -18,7 +18,12 @@ while True:
             db.tables[words[1]].insert(words[2:])
             print("запись добавлена")
         elif command == "select":
-            for row in db.tables[words[1]].select():
+            table = db.tables[words[1]]
+            if len(words) > 2 and words[2].lower() == "where":
+                rows = table.select(words[3], words[4],words[5])
+            else:
+                rows = table.select()
+            for row in rows:
                 print(row)
         else:
             print("не знаю такой команды")
