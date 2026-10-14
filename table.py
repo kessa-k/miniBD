@@ -30,6 +30,8 @@ class Table:
 
     def select(self):
         rows = []
+        if not os.path.exists(self.file):
+            return rows
         with open(self.file, "rb") as f:
             while True:
                 raw = f.read(self.row_size)
