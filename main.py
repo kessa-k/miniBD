@@ -1,7 +1,7 @@
 from database import Database
 
 db = Database("data")
-print("MiniDB готова. Команды: create, insert, select, exit")
+print("MiniDB готова. Команды: create, insert, select, update, delete, exit")
 
 while True:
     words = input("minidb> ").split()
@@ -25,6 +25,12 @@ while True:
                 rows = table.select()
             for row in rows:
                 print(row)
+        elif command == "delete":
+            count = db.tables[words[1]].delete(words[3], words[4], words[5])
+            print("удалено записей:", count)
+        elif command == "update":
+            count = db.tables[words[1]].update(words[3], words[5], words[7], words[8], words[9])
+            print("изменено записей:", count)
         else:
             print("не знаю такой команды")
     except Exception as e:
