@@ -15,10 +15,10 @@ while True:
             db.create_table(words[1], words[2:])
             print("таблица", words[1], "создана")
         elif command == "insert":
-            db.tables[words[1]].insert(words[2:])
-            print("запись добавлена")
+            new_id = db.insert(words[1], words[2:])
+            print("запись добавлена, id =", new_id)
         elif command == "select":
-            table = db.tables[words[1]]
+            table = db.table(words[1])
             if len(words) > 2 and words[2].lower() == "where":
                 rows = table.select(words[3], words[4],words[5])
             else:
@@ -26,12 +26,16 @@ while True:
             for row in rows:
                 print(row)
         elif command == "delete":
-            count = db.tables[words[1]].delete(words[3], words[4], words[5])
+            count = db.table(words[1]).delete(words[3], words[4], words[5])
             print("удалено записей:", count)
         elif command == "update":
-            count = db.tables[words[1]].update(words[3], words[5], words[7], words[8], words[9])
+            count = db.update(words[1], words[3], words[5], words[7], words[8], words[9])
             print("изменено записей:", count)
         else:
             print("не знаю такой команды")
-    except Exception as e:
+    except IndexError:
+        print("ошибка: команда неполная")
+    except ValueError as e:
         print("ошибка:", e)
+    except Exception as e:
+        print("непредвиденная ошибка:", e)

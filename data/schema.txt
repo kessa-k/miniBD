@@ -1,3 +1,3 @@
 datasets id:INT:PK name:STRING task:STRING size:INT
 models id:INT:PK name:STRING version:STRING
-experiments id:INT:PK dataset_id:INT model_id:INT accuracy:FLOAT status:STRING
+experiments id:INT:PK dataset_id:INT:FK:datasets model_id:INT:FK:models accuracy:FLOAT status:STRING
