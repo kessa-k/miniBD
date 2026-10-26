@@ -26,11 +26,12 @@ class Table:
     def pack(self, values):
         row = [True]
         for value, (name, kind, _) in zip(values, self.fields):
-            value = convert(value, kind, name)
             if kind == "STRING":
                 value = value.encode("utf-8")
                 if len(value) > TEXT_LEN:
                     raise ValueError(f"{name}: строка длиннее {TEXT_LEN} байт")
+            else:         
+                value = convert(value, kind, name)
             row.append(value)
         return struct.pack(self.pattern, *row)
 
